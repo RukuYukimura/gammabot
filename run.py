@@ -306,6 +306,12 @@ async def on_message(message):
             await client.send_message(message.channel,"Success!")
 
 @client.event
+async def on_error(error,*args,**kwargs):
+    if errorSendingChannel == 'NUFING':
+        return
+    await client.send_message(errorSendingChannel,"{}: {} [{}]".format(error,args,kwargs))
+
+@client.event
 async def on_ready():
     await client.change_presence(status=discord.Status.idle,game=discord.Game(name="FUCK"))
     print('Bot loaded.')
