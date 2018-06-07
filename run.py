@@ -324,7 +324,7 @@ async def on_ready():
     print('Connected servers:')
     for a in client.servers:
         print('* {0} ({1})'.format(a.name,a.me.nick))
-    ccFile = open('customcommands.json','r')
+    ccFile = open('commands.json','r')
     jsonstuff = json.loads(ccFile.read())
     ccFile.close()
     for key in jsonstuff.keys():
