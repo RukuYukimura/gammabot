@@ -311,8 +311,7 @@ async def on_message(message):
             await client.send_message(message.channel,"Success!")
     elif message.content.lower().startswith('terminate') and message.author.id == '285915453094756362':
         await client.send_message(message.channel,'Shutting down...')
-        await client.logout()
-        await client.close()
+        sys.exit(-1)
 
 @client.event
 async def on_error(event,*args,**kwargs):
