@@ -255,7 +255,7 @@ async def try_kick(user,reason,channel):
             await client.send_message(kickee,"You were kicked for the following reason: {}".format(reason))
             await client.kick(kickee)
     except Exception as error:
-        await client.send_message(channel,'An error has occured: {}'.format(error))
+        print('The following error has occured: {}'.format(error))
 
 async def try_warn(user,reason,message):
     warnee = message.channel.server.get_member(user)
