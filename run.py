@@ -5,6 +5,7 @@ import urllib.request
 import urllib.parse
 import re
 import os
+import traceback
 client = discord.Client()
 
 prefix = '!'
@@ -314,7 +315,9 @@ async def on_message(message):
 
 @client.event
 async def on_error(error,*args,**kwargs):
-    print('The following error has occured: {} | {} | {}'.format(error,args,kwargs))
+    error = traceback.format_exc()
+    message = args[0]
+    await client.send_message(message.channel,":exclamation: {}".format(error))
 
 @client.event
 async def on_ready():
