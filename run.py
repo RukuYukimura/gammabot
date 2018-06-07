@@ -115,7 +115,7 @@ async def try_command(message):
                     embed.add_field(name='{}cc edit (command name) (command reply)'.format(prefix), value='Edit an already made custom command.', inline=False)
                     embed.add_field(name='{}cc add (command name) (command reply)'.format(prefix), value='Create a custom command.', inline=False)
                     embed.add_field(name='{}cc delete (command name)'.format(prefix), value='Delete a custom command.', inline=True)
-                    embed.set_footer(text="Used by {}".format(user.name))
+                    embed.set_footer(text="Used by {}".format(message.author.name))
                     await client.send_message(channel,embed=embed)
                 else:
                     c = command[0]
