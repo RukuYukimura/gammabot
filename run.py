@@ -223,39 +223,36 @@ async def try_unmute(user,message):
     pass
 
 async def try_softban(user,reason,message):
-    kickee = message.channel.server.get_member(user)
-    if kickee.permissions_in(message.channel).administrator:
+    if user.permissions_in(message.channel).administrator:
         await client.send_message(message.channel,"I can't do that, they are an administrator!")
         return
     else:
-        try:
-            await client.send_message(kickee,"You were kicked for the following reason: {}".format(reason))
-            await client.ban(kickee,7)
-            await client.unban(message.channel.server,kickee)
-        except:
-            await client.send_message(message.channel,"They have DM's disabled, but were kicked.")
-            await client.ban(kickee,7)
-            await client.unban(message.channel,server,kickee)
+        await client.send_message(message.channel,"***{} was kicked:*** {}".format(user,reason))
+        await client.ban(user,7)
+        await client.unban(user)
 
 async def try_ban(user,reason,message):
-    banee = message.channel.server.get_member(user)
-    if banee.permissions_in(channel).administrator:
-        await client.send_message(channel,"I can't do that, they are an administrator!")
+    if user.permissions_in(message.channel).administrator:
+        await client.send_message(message.channel,"I can't do that, they are an administrator!")
         return
     else:
-        await client.send_message(banee,"You were banned for the following reason: {}".format(reason))
-        await client.ban(banee,0)
+        await client.send_message(message.channel,"***{} was banned:*** {}".format(user,reason))
+        await client.ban(user,0)
 
 async def try_kick(user,reason,message):
     if user.permissions_in(message.channel).administrator:
         await client.send_message(message.channel,"I can't do that, they are an administrator!")
         return
-    await client.send_message(message.channel,"***{} was banned:*** {}".format(user,reason))
-    await client.kick(user)
+    else:
+        await client.send_message(message.channel,"***{} was kicked:*** {}".format(user,reason))
+        await client.kick(user)
 
 async def try_warn(user,reason,message):
-    warnee = message.channel.server.get_member(user)
-    await client.send_message(channel,"**<@{}>, you have been warned: {}.**".format(user,reason))
+    try:
+        await client.send_message(user,"***You have been warned for***: {}".format(reason))
+        await client.send_message(message.channel,"***{} has been warned***: {}".format(user,reason))
+    except:
+        await client.send_message(message.channel,"{} has DM's disabled, I cannot warn them.".format(user))
 
 async def resolve_user(u_resolvable, server):
     if (u_resolvable.startswith("<@") or u_resolvable.startswith("<@!")) and u_resolvable.startswith(">"): #Covers Case of @
