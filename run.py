@@ -6,6 +6,7 @@ import urllib.parse
 import re
 import os
 import traceback
+import json
 client = discord.Client()
 
 prefix = '!'
@@ -323,6 +324,12 @@ async def on_ready():
     print('Connected servers:')
     for a in client.servers:
         print('* {0} ({1})'.format(a.name,a.me.nick))
+    ccFile = open('customcommands.json','r')
+    jsonstuff = json.loads(ccFile.read())
+    ccFile.close()
+    for key in jsonstuff.keys():
+        customCommands.setdefault(key,jsonstuff[key])
+    ccFile = open('customcommands.json','w')
 
 token = os.environ['TOKEN']
 client.run(token)
