@@ -266,7 +266,7 @@ async def resolve_user(u_resolvable, server):
     else: #Covers Name Case
         mems = server.members
         for x in mems:
-            if not u_resolvable in x:
+            if not u_resolvable.display_name in x:
                 continue
             return x
         return None
