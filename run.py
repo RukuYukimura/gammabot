@@ -41,6 +41,7 @@ eightballreactions = {
 @client.event
 async def try_command(message):
     command = message.content.replace(prefix,'')
+    channel = message.channel
     if command.startswith('kick'):
         if message.author.permissions_in(channel).kick_members:
             command = command.split(' ')
