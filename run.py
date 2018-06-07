@@ -54,7 +54,7 @@ async def try_command(message):
                         break
             reason = command[2]
             tokick = command[1]
-            tokick = await resolve_user(command[1], message.server)
+            tokick = await resolve_user(command[1], message.channel.server)
             await try_kick(tokick,reason,message)
     elif command.startswith('ban'):
         if message.author.permissions_in(channel).ban_members:
