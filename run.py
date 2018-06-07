@@ -8,7 +8,9 @@ client = discord.Client()
 
 prefix = '!'
 
-customCommands={}
+customCommands = {}
+
+errorSendingChannel = "NUFING"
 
 eightballreactions = {
     1: 'It is certain.',
@@ -298,6 +300,10 @@ async def on_message(message):
             await client.send_message(message.channel,"but xua will be sad if he finds out :(")
         else:
             await client.send_message(message.channel,"aww :heartpulse:")
+    elif message.content.lower().startswith('set error channel'):
+        if message.author.permissions_in(message.channel).manage_channels:
+            errorSendingChannel = message.channel
+            await client.send_message(message.channel,"Success!")
 
 @client.event
 async def on_ready():
