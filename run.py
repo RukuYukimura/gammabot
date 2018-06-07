@@ -4,6 +4,7 @@ import random
 import urllib.request
 import urllib.parse
 import re
+from boto.s3.connection import S3Conneciton
 client = discord.Client()
 
 prefix = '!'
@@ -327,4 +328,5 @@ async def on_ready():
     for a in client.servers:
         print('* {0} ({1})'.format(a.name,a.me.nick))
 
-client.run('NDUzNjk1OTI1NTgwMzMzMDY4.DfiozQ.DAH9D1RZWe9bStJiNHlT9j7xfIw')
+token = S3Connection(os.environ['TOKEN'])
+client.run(token)
