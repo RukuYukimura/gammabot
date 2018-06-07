@@ -281,7 +281,7 @@ async def on_message(message):
     elif 'good bot' in message.content.lower():
         await client.send_message(message.channel,":heartpulse:")
     elif 'bad bot' in message.content.lower():
-        await try_warn(message.author.id,"I AM THE BEST BOT",message.channel)
+        await try_warn(message.author.id,"I AM THE BEST BOT",message)
     elif message.content.lower() == 'epsilon':
         await client.send_message(message.channel,':facepalm: This is in no relation to Epsilon whatsoever.')
     elif message.content.lower().startswith('hey 8 ball'):
