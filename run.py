@@ -4,6 +4,7 @@ import random
 import urllib.request
 import urllib.parse
 import re
+import os
 client = discord.Client()
 
 prefix = '!'
