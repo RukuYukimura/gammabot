@@ -266,7 +266,7 @@ async def resolve_user(u_resolvable, server):
     else: #Covers Name Case
         mems = server.members
         for x in mems:
-            if not x.display_name.contains(u_resolvable):
+            if not u_resolvable in x:
                 continue
             return x
         return None
@@ -317,7 +317,7 @@ async def on_message(message):
 async def on_error(event,*args,**kwargs):
     error = traceback.format_exc()
     message = args[0]
-    await client.send_message(message.channel,":exclamation: An error has occured in {}:\n`{}`".format(event,error))
+    await client.send_message(message.channel,":exclamation: An error has occured in {}:\n```{}```".format(event,error))
 
 @client.event
 async def on_ready():
