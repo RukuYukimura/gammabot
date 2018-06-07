@@ -40,7 +40,6 @@ eightballreactions = {
     25: 'Ask <@285915453094756362>.'
 }
 
-@client.event
 async def try_command(message):
     command = message.content.replace(prefix,'')
     channel = message.channel
@@ -55,6 +54,7 @@ async def try_command(message):
                         break
             reason = command[2]
             tokick = command[1]
+            tokick = await resolve_user(command[1], message.server)
             await try_kick(tokick,reason,message)
     elif command.startswith('ban'):
         if message.author.permissions_in(channel).ban_members:
@@ -198,7 +198,6 @@ async def try_command(message):
                 await client.send_message(channel,"{}".format(customCommands[key]))
     pass
 
-@client.event
 async def try_mute(user,reason,message):
     mutee = message.channel.server.get_member(user)
     await client.send_message(mutee,"You were muted for the following reason: {}".format(reason))
@@ -210,7 +209,6 @@ async def try_mute(user,reason,message):
     await client.add_roles(mutee,mutedrole)
     pass
 
-@client.event
 async def try_unmute(user,message):
     unmutee = message.channel.server.get_member(user)
     await client.send_message(unmutee,"You were unmuted.")
@@ -222,7 +220,6 @@ async def try_unmute(user,message):
     await client.remove_roles(unmutee,mutedrole)
     pass
 
-@client.event
 async def try_softban(user,reason,message):
     kickee = message.channel.server.get_member(user)
     if kickee.permissions_in(message.channel).administrator:
@@ -238,7 +235,6 @@ async def try_softban(user,reason,message):
             await client.ban(kickee,7)
             await client.unban(message.channel,server,kickee)
 
-@client.event
 async def try_ban(user,reason,message):
     banee = message.channel.server.get_member(user)
     if banee.permissions_in(channel).administrator:
@@ -248,7 +244,6 @@ async def try_ban(user,reason,message):
         await client.send_message(banee,"You were banned for the following reason: {}".format(reason))
         await client.ban(banee,0)
 
-@client.event
 async def try_kick(user,reason,channel):
     kickee = channel.server.get_member(user)
     if kickee.permissions_in(channel).administrator:
@@ -258,11 +253,23 @@ async def try_kick(user,reason,channel):
         await client.send_message(kickee,"You were kicked for the following reason: {}".format(reason))
         await client.kick(kickee)
 
-@client.event
 async def try_warn(user,reason,message):
     warnee = message.channel.server.get_member(user)
     await client.send_message(channel,"**<@{}>, you have been warned: {}.**".format(user,reason))
-    
+
+async def resolve_user(u_resolvable, server):
+    if (u_resolvable.startswith("<@") or u_resolvable.startswith("<!@")) and u_resolvable.startswith(">"): #Covers Case of @
+        return await server.get_member(u_resolvable.strip('<@!>'))
+    elif u_resolvable.isdigit(): #Covers ID Case
+        return await server.get_member(u_resolvable)
+    else: #Covers Name Case
+        mems = server.members()
+        for x in mems:
+            if not x.display_name.contains(u_resolvable):
+                continue
+            return await x
+        return None
+
 @client.event
 async def on_message(message):
     if message.channel.is_private:
