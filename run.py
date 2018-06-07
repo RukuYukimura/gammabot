@@ -314,10 +314,10 @@ async def on_message(message):
             await client.send_message(message.channel,"Success!")
 
 @client.event
-async def on_error(error,*args,**kwargs):
+async def on_error(event,*args,**kwargs):
     error = traceback.format_exc()
     message = args[0]
-    await client.send_message(message.channel,":exclamation: {}".format(error))
+    await client.send_message(message.channel,":exclamation: An error has occured in {}:\n`{}`".format(event,error))
 
 @client.event
 async def on_ready():
