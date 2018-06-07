@@ -264,7 +264,7 @@ async def resolve_user(u_resolvable, server):
     elif u_resolvable.isdigit(): #Covers ID Case
         return await server.get_member(u_resolvable)
     else: #Covers Name Case
-        mems = server.members()
+        mems = server.members
         for x in mems:
             if not x.display_name.contains(u_resolvable):
                 continue
