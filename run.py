@@ -247,12 +247,11 @@ async def try_ban(user,reason,message):
         await client.ban(banee,0)
 
 async def try_kick(user,reason,message):
-    kickee = message.channel.server.get_member(user)
-    if kickee.permissions_in(channel).administrator:
+    if user.permissions_in(channel).administrator:
         await client.send_message(channel,"I can't do that, they are an administrator!")
         return
-    await client.send_message(kickee,"You were kicked for the following reason: {}".format(reason))
-    await client.kick(kickee)
+    await client.send_message(channel,"{} was banned: {}".format(user,reason))
+    await client.kick(user)
 
 async def try_warn(user,reason,message):
     warnee = message.channel.server.get_member(user)
