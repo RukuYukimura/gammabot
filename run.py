@@ -321,7 +321,7 @@ async def on_error(event,*args,**kwargs):
 
 @client.event
 async def on_ready():
-    await client.change_presence(status=discord.Status.idle,game=discord.Game(name="FUCK"))
+    #await client.change_presence(status=discord.Status.idle,game=discord.Game(name="FUCK"))
     print('Bot loaded.')
     print('Connected to user: {}'.format(client.user.name))
     print('Connected servers:')
