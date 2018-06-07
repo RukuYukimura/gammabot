@@ -258,7 +258,7 @@ async def try_warn(user,reason,message):
     await client.send_message(channel,"**<@{}>, you have been warned: {}.**".format(user,reason))
 
 async def resolve_user(u_resolvable, server):
-    if (u_resolvable.startswith("<@") or u_resolvable.startswith("<!@")) and u_resolvable.startswith(">"): #Covers Case of @
+    if (u_resolvable.startswith("<@") or u_resolvable.startswith("<@!")) and u_resolvable.startswith(">"): #Covers Case of @
         return await server.get_member(u_resolvable.strip('<@!>'))
     elif u_resolvable.isdigit(): #Covers ID Case
         return await server.get_member(u_resolvable)
@@ -267,7 +267,7 @@ async def resolve_user(u_resolvable, server):
         for x in mems:
             if not x.display_name.contains(u_resolvable):
                 continue
-            return await x
+            return x
         return None
 
 @client.event
