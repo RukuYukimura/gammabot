@@ -246,16 +246,12 @@ async def try_ban(user,reason,message):
         await client.ban(banee,0)
 
 async def try_kick(user,reason,channel):
-    try:
-        kickee = channel.server.get_member(user)
-        if kickee.permissions_in(channel).administrator:
-            await client.send_message(channel,"I can't do that, they are an administrator!")
-            return
-        else:
-            await client.send_message(kickee,"You were kicked for the following reason: {}".format(reason))
-            await client.kick(kickee)
-    except Exception as error:
-        print('The following error has occured: {}'.format(error))
+    kickee = channel.server.get_member(user)
+    if kickee.permissions_in(channel).administrator:
+        await client.send_message(channel,"I can't do that, they are an administrator!")
+        return
+    await client.send_message(kickee,"You were kicked for the following reason: {}".format(reason))
+    await client.kick(kickee)
 
 async def try_warn(user,reason,message):
     warnee = message.channel.server.get_member(user)
@@ -318,9 +314,7 @@ async def on_message(message):
 
 @client.event
 async def on_error(error,*args,**kwargs):
-    if errorSendingChannel == 'NUFING':
-        return
-    await client.send_message(errorSendingChannel,"{}: {} [{}]".format(error,args,kwargs))
+    print('The following error has occured: {} | {} | {}'.format(error,args,kwargs))
 
 @client.event
 async def on_ready():
