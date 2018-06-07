@@ -248,11 +248,8 @@ async def try_kick(user,reason,message):
         await client.kick(user)
 
 async def try_warn(user,reason,message):
-    try:
-        await client.send_message(user,"***You have been warned for***: {}".format(reason))
-        await client.send_message(message.channel,"***{} has been warned***: {}".format(user,reason))
-    except:
-        await client.send_message(message.channel,"{} has DM's disabled, I cannot warn them.".format(user))
+    await client.send_message(user,"***You have been warned for***: {}".format(reason))
+    await client.send_message(message.channel,"***{} has been warned***: {}".format(user,reason))
 
 async def resolve_user(u_resolvable, server):
     if (u_resolvable.startswith("<@") or u_resolvable.startswith("<@!")) and u_resolvable.startswith(">"): #Covers Case of @
