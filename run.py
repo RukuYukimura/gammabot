@@ -256,8 +256,8 @@ async def try_warn(user,reason,message):
         await client.send_message(message.channel,"{} has DM's disabled, so I am unable to warn them.".format(user))
 
 async def resolve_user(u_resolvable, server):
-    if (u_resolvable.startswith("<@") or u_resolvable.startswith("<@!")) and u_resolvable.startswith(">"): #Covers Case of @
-        return await server.get_member(u_resolvable.replace('<@','').replace('<@!','').replace('>',''))
+    if (u_resolvable.startswith("<@") or u_resolvable.startswith("<@!")) and u_resolvable.endswith(">"): #Covers Case of @
+        return server.get_member(u_resolvable.replace('<@','').replace('<@!','').replace('>',''))
     elif u_resolvable.isdigit(): #Covers ID Case
         return server.get_member(u_resolvable)
     else: #Covers Name Case
