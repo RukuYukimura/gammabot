@@ -12,7 +12,7 @@ client = discord.Client()
 
 prefix = '!'
 
-customCommands = {}
+customCommands = json.loads(os.environ['JSON'])
 
 errorSendingChannel = "NUFING"
 
@@ -136,9 +136,7 @@ async def try_command(message):
                             if alpha in customCommands.keys():
                                 raise KeyError
                             customCommands.setdefault(alpha,beta)
-                            ccFile = open('commands.json','w')
-                            ccFile.write(json.dumps(customCommands))
-                            ccFile.close()
+                            os.environ['JSON'] = json.dumps(customCommands)
                             await client.send_message(channel,"Command '{0}' created.".format(alpha))
                         except IndexError:
                             await client.send_message(channel,"You must specify a Command Name and a Command Reply.")
@@ -157,16 +155,15 @@ async def try_command(message):
                             beta = command[3]
                             if alpha in customCommands.keys():
                                 customCommands[alpha] = beta
+                                os.environ['JSON'] = json.dumps(customCommands)
                                 await client.send_message(channel,"Command '{}' successfully edited.".format(alpha))
                         except:
                             return
                     elif choice == 'delete':
-                        try:
-                            alpha = command[2]
-                            customCommands.pop(alpha)
-                            await client.send_message(channel,"Command '{}' successfully deleted.".format(alpha))
-                        except Exception as e:
-                            await client.send_message(channel,e)
+                        alpha = command[2]
+                        customCommands.pop(alpha)
+                        os.environ['JSON'] = json.dumps(customCommands)
+                        await client.send_message(channel,"Command '{}' successfully deleted.".format(alpha))
     elif command.startswith('choose'):
         command = command.replace('choose ','')
         command = command.split(',')
@@ -331,11 +328,7 @@ async def on_ready():
     print('Connected servers:')
     for a in client.servers:
         print('* {0} ({1})'.format(a.name,a.me.nick))
-    ccFile = open('commands.json','r')
-    jsonstuff = json.loads(ccFile.read())
-    ccFile.close()
-    for key in jsonstuff.keys():
-        customCommands.setdefault(key,jsonstuff[key])
+    
 
 token = os.environ['TOKEN']
 client.run(token)
