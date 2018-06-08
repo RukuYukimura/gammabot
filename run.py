@@ -7,6 +7,7 @@ import re
 import os
 import traceback
 import json
+import dropbox
 client = discord.Client()
 
 prefix = '!'
