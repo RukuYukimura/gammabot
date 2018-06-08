@@ -7,7 +7,8 @@ import re
 import os
 import traceback
 import json
-import 
+import firebase_admin
+from firebase_admin import db, credentials
 
 client = discord.Client()
 
