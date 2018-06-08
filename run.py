@@ -135,6 +135,9 @@ async def try_command(message):
                             if alpha in customCommands.keys():
                                 raise KeyError
                             customCommands.setdefault(alpha,beta)
+                            ccFile = open('commands.json','w')
+                            ccFile.write(json.dumps(customCommands))
+                            ccFile.close()
                             await client.send_message(channel,"Command '{0}' created.".format(alpha))
                         except IndexError:
                             await client.send_message(channel,"You must specify a Command Name and a Command Reply.")
@@ -332,7 +335,6 @@ async def on_ready():
     ccFile.close()
     for key in jsonstuff.keys():
         customCommands.setdefault(key,jsonstuff[key])
-    ccFile = open('customcommands.json','w')
 
 token = os.environ['TOKEN']
 client.run(token)
