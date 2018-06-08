@@ -7,12 +7,13 @@ import re
 import os
 import traceback
 import json
+import 
 
 client = discord.Client()
 
 prefix = '!'
 
-customCommands = json.loads(os.environ['JSON'])
+customCommands = {}
 
 errorSendingChannel = "NUFING"
 
