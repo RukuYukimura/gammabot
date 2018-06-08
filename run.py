@@ -257,7 +257,7 @@ async def try_warn(user,reason,message):
 
 async def resolve_user(u_resolvable, server):
     if (u_resolvable.startswith("<@") or u_resolvable.startswith("<@!")) and u_resolvable.startswith(">"): #Covers Case of @
-        return await server.get_member(u_resolvable.strip('<@!>'))
+        return await server.get_member(u_resolvable.replace('<@','').replace('<@!','').replace('>',''))
     elif u_resolvable.isdigit(): #Covers ID Case
         return await server.get_member(u_resolvable)
     else: #Covers Name Case
