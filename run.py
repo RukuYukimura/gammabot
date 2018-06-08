@@ -80,7 +80,7 @@ async def try_command(message):
                     except:
                         break
             reason = command[2]
-            tokick = command[1]
+            tokick = await resolve_user(command[1],message.channel.server)
             await try_softban(tokick,reason,message)
     elif command.startswith('mute'):
         if message.author.permissions_in(channel).mute_members:
