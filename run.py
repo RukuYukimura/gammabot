@@ -230,8 +230,8 @@ async def try_softban(user,reason,message):
         await client.send_message(message.channel,"I can't do that, they are an administrator!")
         return
     else:
-        await client.send_message(message.channel,"{} was kicked: {}".format(user,reason))
         await client.ban(user,7)
+        await client.send_message(message.channel,"{} was kicked: {}".format(user,reason))
         bans = client.get_bans(message.server)
         for u in bans:
             try:
