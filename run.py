@@ -47,6 +47,7 @@ eightballreactions = {
     25: 'Ask <@285915453094756362>.'
 }
 
+@client.event
 async def try_command(message):
     command = message.content.replace(prefix,'')
     channel = message.channel
@@ -204,6 +205,7 @@ async def try_command(message):
                 await client.send_message(channel,"{}".format(customCommands[key]))
     pass
 
+@client.event
 async def try_mute(user,reason,message):
     mutee = message.channel.server.get_member(user)
     await client.send_message(mutee,"You were muted for the following reason: {}".format(reason))
@@ -215,6 +217,7 @@ async def try_mute(user,reason,message):
     await client.add_roles(mutee,mutedrole)
     pass
 
+@client.event
 async def try_unmute(user,message):
     unmutee = message.channel.server.get_member(user)
     await client.send_message(unmutee,"You were unmuted.")
@@ -226,6 +229,7 @@ async def try_unmute(user,message):
     await client.remove_roles(unmutee,mutedrole)
     pass
 
+@client.event
 async def try_softban(user,reason,message):
     if user.permissions_in(message.channel).administrator:
         await client.send_message(message.channel,"I can't do that, they are an administrator!")
@@ -244,6 +248,7 @@ async def try_softban(user,reason,message):
             except discord.HTTPException:
                 await client.send_message(message.channel,"Unbanning failed.")
 
+@client.event
 async def try_ban(user,reason,message):
     if user.permissions_in(message.channel).administrator:
         await client.send_message(message.channel,"I can't do that, they are an administrator!")
@@ -252,6 +257,7 @@ async def try_ban(user,reason,message):
         await client.send_message(message.channel,"{} was banned: {}".format(user,reason))
         await client.ban(user,0)
 
+@client.event
 async def try_kick(user,reason,message):
     if user.permissions_in(message.channel).administrator:
         await client.send_message(message.channel,"I can't do that, they are an administrator!")
@@ -260,6 +266,7 @@ async def try_kick(user,reason,message):
         await client.send_message(message.channel,"***{} was kicked:*** {}".format(user,reason))
         await client.kick(user)
 
+@client.event
 async def try_warn(user,reason,message):
     try:
         await client.send_message(user,"***You have been warned for***: {}".format(reason))
@@ -267,6 +274,7 @@ async def try_warn(user,reason,message):
     except discord.errors.Forbidden:
         await client.send_message(message.channel,"{} has DM's disabled, so I am unable to warn them.".format(user))
 
+@client.event
 async def resolve_user(u_resolvable, server):
     if (u_resolvable.startswith("<@") or u_resolvable.startswith("<@!")) and u_resolvable.endswith(">"): #Covers Case of @
         return server.get_member(u_resolvable.replace('<@','').replace('<@!','').replace('>',''))
