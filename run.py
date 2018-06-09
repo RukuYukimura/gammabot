@@ -250,13 +250,13 @@ async def try_softban(user,reason,message):
 
 @client.event
 async def try_ban(user,reason,message):
-    print(json.dumps(user))
+    #print(json.dumps(user))
     if user.permissions_in(message.channel).administrator:
         await client.send_message(message.channel,"I can't do that, they are an administrator!")
         return
     else:
-        await client.send_message(message.channel,"{} was banned: {}".format(user,reason))
         await client.ban(user,0)
+        await client.send_message(message.channel,"{} was banned: {}".format(user,reason))
 
 @client.event
 async def try_kick(user,reason,message):
