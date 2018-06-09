@@ -230,17 +230,25 @@ async def try_softban(user,reason,message):
         await client.send_message(message.channel,"I can't do that, they are an administrator!")
         return
     else:
-        await client.send_message(message.channel,"***{} was kicked:*** {}".format(user,reason))
-        old = user.id
+        await client.send_message(message.channel,"{} was kicked: {}".format(user,reason))
         await client.ban(user,7)
-        await client.unban(old)
+        bans = client.get_bans(message.server)
+        for u in bans:
+            try:
+                if u.id == user.id:
+                    await client.unban(message.server,u)
+                    await client.send_message(message.channel,"{} was unbanned.".format(user.name))
+            except discord.Forbidden:
+                await client.send_message(message.channel,"I don't have permission to do this!")
+            except discord.HTTPException:
+                await client.send_message(message.channel,"Unbanning failed.")
 
 async def try_ban(user,reason,message):
     if user.permissions_in(message.channel).administrator:
         await client.send_message(message.channel,"I can't do that, they are an administrator!")
         return
     else:
-        await client.send_message(message.channel,"***{} was banned:*** {}".format(user,reason))
+        await client.send_message(message.channel,"{} was banned: {}".format(user,reason))
         await client.ban(user,0)
 
 async def try_kick(user,reason,message):
