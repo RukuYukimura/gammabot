@@ -231,7 +231,7 @@ async def try_softban(user,reason,message):
         return
     else:
         await client.send_message(message.channel,"***{} was kicked:*** {}".format(user,reason))
-        old = user
+        old = user.id
         await client.ban(user,7)
         await client.unban(old)
 
