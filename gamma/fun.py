@@ -28,7 +28,7 @@ async def roll(x=6):
   return randint(1,x)
 
 async def choices(l:list):
-  return l[randint(1,len(l)-1))]
+  return l[randint(1,len(l)-1)]
 
 if __name__ == "__main__":
   import sys
