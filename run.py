@@ -15,7 +15,7 @@ async def on_message(message):
     elif message.content.startswith('!choose'):
         choices = message.content.replace('!choose','')
         choices = choices.strip(',')
-        await client.send_message(message.channel,"I chose: {}".format(await fun.choice(choices)))
+        await client.send_message(message.channel,"I chose: {}".format(await fun.choices(choices)))
     pass
 
 client.run(os.environ['TOKEN'])
