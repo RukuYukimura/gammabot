@@ -24,6 +24,9 @@ async def magic8ball():
   }
   return reactions[randint(1,len(reactions)-1)]
 
+async def roll(x=6):
+  return randint(1,x)
+
 if __name__ == "__main__":
   import sys
   sys.exit(-1)
