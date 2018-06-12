@@ -1,6 +1,6 @@
 import discord
 from random import randint
-from datetime import date
+from datetime import datetime
 
 async def magic8ball():
   reactions = {
@@ -29,6 +29,25 @@ async def roll(x=6):
 
 async def choices(l:list):
   return l[randint(1,len(l)-1)]
+
+class reminder:
+  reminders = {}
+  replies = {
+    1: 'Ok.',
+    2: 'Alright fine.'
+  }
+  async def create_reminder(message):
+    content = message.content.split(' ')
+    rn = datetime.today()
+    msgtime = message.timestamp
+    
+    return
+  
+  async def update_reminders():
+    return
+  
+  async def delete_reminder(reminderID):
+    return
 
 if __name__ == "__main__":
   import sys
